@@ -1,12 +1,13 @@
-package newsapp.sonia.com.cfnewsapp
+package newsapp.sonia.com.cfnewsapp.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import newsapp.sonia.com.cfnewsapp.model.News
+import newsapp.sonia.com.cfnewsapp.R
 import kotlinx.android.synthetic.main.news_item.view.*
-
 
 /**
  * Created by soniawadji on 01/06/18.
