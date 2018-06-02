@@ -1,6 +1,8 @@
 package newsapp.sonia.com.cfnewsapp.network
 
+import io.reactivex.Observable
 import newsapp.sonia.com.cfnewsapp.Constants
+import newsapp.sonia.com.cfnewsapp.model.NewsResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -30,6 +32,8 @@ class RestClient {
                     .build()
         }
 
+        fun getNewsAPI(): NewsAPI = getRetrofit().create(NewsAPI::class.java)
+
     }
 
     interface NewsAPI {
@@ -37,6 +41,6 @@ class RestClient {
         fun fetchNews(@Query("category") category: String,
                       @Query("from") date: String,
                       @Query("sortBy") sortBy: String,
-                      @Query("apiKey") apiKey: String): Call<Observable>
+                      @Query("apiKey") apiKey: String): Observable<NewsResponse>
     }
 }
