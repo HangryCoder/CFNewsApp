@@ -17,5 +17,7 @@ class Constants {
 
         const val DATE = "2018-06-03"
 
+        const val INTENT_NEWS = "news"
+
     }
 }

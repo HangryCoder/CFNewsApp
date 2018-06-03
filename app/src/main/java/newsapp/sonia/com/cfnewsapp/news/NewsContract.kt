@@ -14,7 +14,7 @@ interface NewsContract {
 
         fun showFilteringDialog()
 
-        fun showNewsDetails()
+        fun showNewsDetails(news: News)
 
     }
 
@@ -22,7 +22,7 @@ interface NewsContract {
 
         fun fetchNews(category: String, date: String, sortBy: String)
 
-        fun openNewsDetails()
+        fun openNewsDetails(news: News)
 
     }
 }

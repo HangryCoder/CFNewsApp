@@ -12,8 +12,8 @@ class NewsPresenter(private val newsRepository: NewsRepository, private val news
         newsRepository.getNewsList(category, date, sortBy, this)
     }
 
-    override fun openNewsDetails() {
-        newsView.showNewsDetails()
+    override fun openNewsDetails(news: News) {
+        newsView.showNewsDetails(news)
     }
 
     override fun onSuccess(newsList: ArrayList<News>) {

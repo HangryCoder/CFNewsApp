@@ -13,7 +13,8 @@ import kotlinx.android.synthetic.main.news_item.view.*
 /**
  * Created by soniawadji on 01/06/18.
  */
-class NewsAdapter(private val context: Context, private var newsList: ArrayList<News>) :
+class NewsAdapter(private val context: Context, private var newsList: ArrayList<News>,
+                  private var newsAdapterCallback: NewsAdapter.NewsAdapterCallback) :
         RecyclerView.Adapter<NewsAdapter.NewsHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): NewsHolder {
@@ -33,5 +34,16 @@ class NewsAdapter(private val context: Context, private var newsList: ArrayList<
 
     override fun getItemCount(): Int = newsList.size
 
-    class NewsHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    inner class NewsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        init {
+            itemView.news_item.setOnClickListener {
+                newsAdapterCallback.onClickListener(newsList[adapterPosition])
+            }
+        }
+    }
+
+    interface NewsAdapterCallback {
+        fun onClickListener(news: News)
+    }
 }

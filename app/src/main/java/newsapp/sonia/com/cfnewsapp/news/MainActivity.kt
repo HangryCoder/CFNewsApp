@@ -1,6 +1,7 @@
 package newsapp.sonia.com.cfnewsapp.news
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -17,8 +18,9 @@ import newsapp.sonia.com.cfnewsapp.utils.Constants
 import newsapp.sonia.com.cfnewsapp.utils.Utils
 import kotlinx.android.synthetic.main.activity_main.*
 import newsapp.sonia.com.cfnewsapp.data.NewsRepository
+import newsapp.sonia.com.cfnewsapp.newsdetails.NewsDetailsActivity
 
-class MainActivity : AppCompatActivity(), NewsContract.View {
+class MainActivity : AppCompatActivity(), NewsContract.View, NewsAdapter.NewsAdapterCallback {
 
     private val TAG = MainActivity::class.java.simpleName
     private var newsList: ArrayList<News> = ArrayList()
@@ -43,7 +45,7 @@ class MainActivity : AppCompatActivity(), NewsContract.View {
         newsPresenter.fetchNews(category = selectedCategory, date = Constants.DATE,
                 sortBy = Constants.SORT_BY)
 
-        newsAdapter = NewsAdapter(context = this, newsList = newsList)
+        newsAdapter = NewsAdapter(context = this, newsList = newsList, newsAdapterCallback = this)
         linearLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = linearLayoutManager
 
@@ -74,7 +76,7 @@ class MainActivity : AppCompatActivity(), NewsContract.View {
     override fun displayNews(newsList: ArrayList<News>) {
         this.newsList.clear()
         this.newsList = newsList
-        newsAdapter = NewsAdapter(context = this, newsList = newsList)
+        newsAdapter = NewsAdapter(context = this, newsList = newsList, newsAdapterCallback = this)
         recyclerView.adapter = newsAdapter
         newsAdapter.notifyDataSetChanged()
     }
@@ -96,6 +98,14 @@ class MainActivity : AppCompatActivity(), NewsContract.View {
     override fun showFilteringDialog() {
     }
 
-    override fun showNewsDetails() {
+    override fun showNewsDetails(news: News) {
+        val intent = Intent(this@MainActivity, NewsDetailsActivity::class.java)
+        intent.putExtra(Constants.INTENT_NEWS, news)
+        startActivity(intent)
     }
+
+    override fun onClickListener(news: News) {
+        newsPresenter.openNewsDetails(news)
+    }
+
 }
