@@ -105,7 +105,9 @@ class MainActivity : AppCompatActivity(), NewsContract.View, NewsAdapter.NewsAda
 
     override fun showNewsDetails(news: News) {
         val intent = Intent(this@MainActivity, NewsDetailsActivity::class.java)
-        intent.putExtra(Constants.INTENT_NEWS, news)
+        val bundle = Bundle()
+        bundle.putSerializable(Constants.INTENT_NEWS, news)
+        intent.putExtras(bundle)
         startActivity(intent)
     }
 

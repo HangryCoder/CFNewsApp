@@ -16,7 +16,7 @@ class NewsDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news_details)
 
-        news = intent.getParcelableExtra(Constants.INTENT_NEWS)
+        news = intent.extras.getSerializable(Constants.INTENT_NEWS) as News
 
         newsTitle.text = news.title
         newsDescription.text = news.description
