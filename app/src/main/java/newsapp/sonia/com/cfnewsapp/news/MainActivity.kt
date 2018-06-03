@@ -95,9 +95,6 @@ class MainActivity : AppCompatActivity(), NewsContract.View, NewsAdapter.NewsAda
         }
     }
 
-    override fun showFilteringDialog() {
-    }
-
     override fun showNewsDetails(news: News) {
         val intent = Intent(this@MainActivity, NewsDetailsActivity::class.java)
         intent.putExtra(Constants.INTENT_NEWS, news)

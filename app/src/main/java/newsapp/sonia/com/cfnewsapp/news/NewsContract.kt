@@ -12,8 +12,6 @@ interface NewsContract {
 
         fun showProgressDialog(show: Boolean)
 
-        fun showFilteringDialog()
-
         fun showNewsDetails(news: News)
 
     }
