@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import newsapp.sonia.com.cfnewsapp.model.News
 import newsapp.sonia.com.cfnewsapp.R
 import kotlinx.android.synthetic.main.news_item.view.*
@@ -25,6 +26,9 @@ class NewsAdapter(private val context: Context, private var newsList: ArrayList<
 
         holder?.itemView?.newsTitle?.text = news.title
         holder?.itemView?.newsDescription?.text = news.description
+        Glide.with(context)
+                .load(news.newsImage)
+                .into(holder?.itemView!!.newsImage)
     }
 
     override fun getItemCount(): Int = newsList.size
