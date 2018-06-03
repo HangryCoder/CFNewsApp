@@ -8,18 +8,16 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import newsapp.sonia.com.cfnewsapp.adapter.NewsAdapter
 import newsapp.sonia.com.cfnewsapp.model.News
 import newsapp.sonia.com.cfnewsapp.R
-import newsapp.sonia.com.cfnewsapp.network.RestClient
 import newsapp.sonia.com.cfnewsapp.utils.Constants
 import newsapp.sonia.com.cfnewsapp.utils.Utils
 import kotlinx.android.synthetic.main.activity_main.*
 import newsapp.sonia.com.cfnewsapp.data.NewsRepository
 import newsapp.sonia.com.cfnewsapp.newsdetails.NewsDetailsActivity
 import android.support.v7.widget.helper.ItemTouchHelper
+import newsapp.sonia.com.cfnewsapp.utils.OnSwipeToDismissCallback
 
 
 class MainActivity : AppCompatActivity(), NewsContract.View, NewsAdapter.NewsAdapterCallback {
@@ -51,14 +49,13 @@ class MainActivity : AppCompatActivity(), NewsContract.View, NewsAdapter.NewsAda
         linearLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = linearLayoutManager
 
-        val simpleItemTouchCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-            override fun onMove(recyclerView: RecyclerView,
-                                viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean = true
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) = newsPresenter.dismissNews(viewHolder.layoutPosition)
+        val onSwipeToDismissCallback = object : OnSwipeToDismissCallback() {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
+                newsPresenter.dismissNews(viewHolder!!.layoutPosition)
+            }
         }
 
-        val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
+        val itemTouchHelper = ItemTouchHelper(onSwipeToDismissCallback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
         recyclerView.adapter = newsAdapter
 
