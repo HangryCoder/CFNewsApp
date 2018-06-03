@@ -8,15 +8,13 @@ interface NewsContract {
 
         fun displayNews(newsList: ArrayList<News>)
 
-        fun displaySuccess(successMessage: String)
-
         fun displayError(errorMessage: String)
-
-        fun displayNoNews()
 
         fun showProgressDialog(show: Boolean)
 
         fun showFilteringDialog()
+
+        fun showNewsDetails()
 
     }
 
@@ -24,7 +22,7 @@ interface NewsContract {
 
         fun fetchNews(category: String, date: String, sortBy: String)
 
-        fun showNewsDetails(newsList: ArrayList<News>)
+        fun openNewsDetails()
 
     }
 }

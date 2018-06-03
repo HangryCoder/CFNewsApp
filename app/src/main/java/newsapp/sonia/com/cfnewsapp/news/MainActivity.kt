@@ -1,5 +1,6 @@
 package newsapp.sonia.com.cfnewsapp.news
 
+import android.app.ProgressDialog
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -15,23 +16,32 @@ import newsapp.sonia.com.cfnewsapp.network.RestClient
 import newsapp.sonia.com.cfnewsapp.utils.Constants
 import newsapp.sonia.com.cfnewsapp.utils.Utils
 import kotlinx.android.synthetic.main.activity_main.*
+import newsapp.sonia.com.cfnewsapp.data.NewsRepository
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NewsContract.View {
 
     private val TAG = MainActivity::class.java.simpleName
     private var newsList: ArrayList<News> = ArrayList()
     private lateinit var newsAdapter: NewsAdapter
     private lateinit var linearLayoutManager: RecyclerView.LayoutManager
     private var selectedCategory = ""
-    private val date = "2018-06-02"
-    private val popularity = "popularity"
+    private lateinit var newsPresenter: NewsPresenter
+    private lateinit var progressDialog: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         selectedCategory = resources.getString(R.string.general)
-        getNewsList(selectedCategory, date, popularity)
+
+        progressDialog = ProgressDialog(this)
+        progressDialog.setMessage(resources.getString(R.string.loading_message))
+        progressDialog.setCanceledOnTouchOutside(false)
+
+        newsPresenter = NewsPresenter(NewsRepository(), this)
+
+        newsPresenter.fetchNews(category = selectedCategory, date = Constants.DATE,
+                sortBy = Constants.SORT_BY)
 
         newsAdapter = NewsAdapter(context = this, newsList = newsList)
         linearLayoutManager = LinearLayoutManager(this)
@@ -56,31 +66,36 @@ class MainActivity : AppCompatActivity() {
             R.id.entertainmentCategory -> resources.getString(R.string.entertainment)
             else -> resources.getString(R.string.general)
         }
-        getNewsList(selectedCategory, date, popularity)
+        newsPresenter.fetchNews(category = selectedCategory, date = Constants.DATE,
+                sortBy = Constants.SORT_BY)
         return true
     }
 
-    private fun getNewsList(category: String, date: String, sortBy: String) {
+    override fun displayNews(newsList: ArrayList<News>) {
+        this.newsList.clear()
+        this.newsList = newsList
+        newsAdapter = NewsAdapter(context = this, newsList = newsList)
+        recyclerView.adapter = newsAdapter
+        newsAdapter.notifyDataSetChanged()
+    }
 
-        val disposable = RestClient.getNewsAPI()
-                .fetchNews(category, date, sortBy, Constants.API_KEY)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ response ->
-                    Utils.showLogE(TAG, "response " + response.status)
-                    val status = response.status
-                    if (status == Constants.API_STATUS) {
-                        newsList.clear()
-                        newsList = response.newsList
-                        newsAdapter = NewsAdapter(context = this, newsList = newsList)
-                        recyclerView.adapter = newsAdapter
-                        newsAdapter.notifyDataSetChanged()
-                    } else {
-                        Utils.showToast(this, resources.getString(R.string.something_went_wrong))
-                    }
-                }, { error ->
-                    Utils.showToast(this, "Error " + error.localizedMessage)
-                })
+    override fun displayError(errorMessage: String) {
+        Utils.showToast(this, "Error $errorMessage")
+    }
 
+    override fun showProgressDialog(show: Boolean) {
+        if (show) {
+            progressDialog.show()
+        } else {
+            if (progressDialog.isShowing) {
+                progressDialog.dismiss()
+            }
+        }
+    }
+
+    override fun showFilteringDialog() {
+    }
+
+    override fun showNewsDetails() {
     }
 }
