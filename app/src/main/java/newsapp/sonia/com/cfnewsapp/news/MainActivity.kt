@@ -1,20 +1,20 @@
-package newsapp.sonia.com.cfnewsapp
+package newsapp.sonia.com.cfnewsapp.news
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import newsapp.sonia.com.cfnewsapp.adapter.NewsAdapter
 import newsapp.sonia.com.cfnewsapp.model.News
-import kotlinx.android.synthetic.main.activity_main.*
+import newsapp.sonia.com.cfnewsapp.R
 import newsapp.sonia.com.cfnewsapp.network.RestClient
 import newsapp.sonia.com.cfnewsapp.utils.Constants
 import newsapp.sonia.com.cfnewsapp.utils.Utils
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
