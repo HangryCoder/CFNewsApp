@@ -3,9 +3,6 @@ package newsapp.sonia.com.cfnewsapp.data
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_main.*
-import newsapp.sonia.com.cfnewsapp.R
-import newsapp.sonia.com.cfnewsapp.adapter.NewsAdapter
 import newsapp.sonia.com.cfnewsapp.network.RestClient
 import newsapp.sonia.com.cfnewsapp.utils.Constants
 import newsapp.sonia.com.cfnewsapp.utils.Utils

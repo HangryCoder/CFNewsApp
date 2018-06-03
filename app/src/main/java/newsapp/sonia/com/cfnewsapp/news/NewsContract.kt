@@ -22,9 +22,9 @@ interface NewsContract {
 
     interface Presenter {
 
-        fun fetchNews(category: String)
+        fun fetchNews(category: String, date: String, sortBy: String)
 
-        fun showNewsDetails(news: News)
+        fun showNewsDetails(newsList: ArrayList<News>)
 
     }
 }
