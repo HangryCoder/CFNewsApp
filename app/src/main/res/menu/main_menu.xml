@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/generalCategory"
+        android:title="@string/general" />
+
+    <item
+        android:id="@+id/technologyCategory"
+        android:title="@string/technology" />
+
+    <item
+        android:id="@+id/scienceCategory"
+        android:title="@string/science" />
+
+    <item
+        android:id="@+id/sportCategory"
+        android:title="@string/sports" />
+
+    <item
+        android:id="@+id/entertainmentCategory"
+        android:title="@string/entertainment" />
+
+</menu>

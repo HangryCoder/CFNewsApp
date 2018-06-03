@@ -1,4 +1,4 @@
-package newsapp.sonia.com.cfnewsapp
+package newsapp.sonia.com.cfnewsapp.utils
 
 class Constants {
 
@@ -11,5 +11,6 @@ class Constants {
 
         const val API_KEY = "84f4ad4a5f064747b9132c5f06a8c9c1"
 
+        const val API_STATUS = "ok"
     }
 }
