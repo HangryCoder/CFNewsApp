@@ -70,6 +70,7 @@ class MainActivity : AppCompatActivity() {
                     Utils.showLogE(TAG, "response " + response.status)
                     val status = response.status
                     if (status == Constants.API_STATUS) {
+                        newsList.clear()
                         newsList = response.newsList
                         newsAdapter = NewsAdapter(context = this, newsList = newsList)
                         recyclerView.adapter = newsAdapter
