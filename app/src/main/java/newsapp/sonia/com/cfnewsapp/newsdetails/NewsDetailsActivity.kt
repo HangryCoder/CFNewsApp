@@ -8,7 +8,8 @@ import newsapp.sonia.com.cfnewsapp.R
 import newsapp.sonia.com.cfnewsapp.model.News
 import newsapp.sonia.com.cfnewsapp.utils.Constants
 
-class NewsDetailsActivity : AppCompatActivity() {
+class NewsDetailsActivity : AppCompatActivity(), NewsDetailsContract.View {
+
 
     private lateinit var news: News
 
@@ -18,6 +19,12 @@ class NewsDetailsActivity : AppCompatActivity() {
 
         news = intent.extras.getSerializable(Constants.INTENT_NEWS) as News
 
+        val newsDetailsPresenter = NewsDetailsPresenter(news, this)
+
+        newsDetailsPresenter.setNewsDetailsView()
+    }
+
+    override fun displayNewsDetails(news: News) {
         newsTitle.text = news.title
         newsDescription.text = news.description
         newsAuthor.text = news.newsAuthor
