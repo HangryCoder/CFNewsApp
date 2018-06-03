@@ -19,6 +19,8 @@ import newsapp.sonia.com.cfnewsapp.utils.Utils
 import kotlinx.android.synthetic.main.activity_main.*
 import newsapp.sonia.com.cfnewsapp.data.NewsRepository
 import newsapp.sonia.com.cfnewsapp.newsdetails.NewsDetailsActivity
+import android.support.v7.widget.helper.ItemTouchHelper
+
 
 class MainActivity : AppCompatActivity(), NewsContract.View, NewsAdapter.NewsAdapterCallback {
 
@@ -49,6 +51,15 @@ class MainActivity : AppCompatActivity(), NewsContract.View, NewsAdapter.NewsAda
         linearLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = linearLayoutManager
 
+        val simpleItemTouchCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            override fun onMove(recyclerView: RecyclerView,
+                                viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean = true
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) = newsPresenter.dismissNews(viewHolder.layoutPosition)
+        }
+
+        val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
         recyclerView.adapter = newsAdapter
 
     }
@@ -103,6 +114,11 @@ class MainActivity : AppCompatActivity(), NewsContract.View, NewsAdapter.NewsAda
 
     override fun onClickListener(news: News) {
         newsPresenter.openNewsDetails(news)
+    }
+
+    override fun onSwipeToDismiss(position: Int) {
+        newsList.removeAt(position)
+        newsAdapter.notifyItemRemoved(position)
     }
 
 }

@@ -7,6 +7,10 @@ import newsapp.sonia.com.cfnewsapp.model.News
 class NewsPresenter(private val newsRepository: NewsRepository, private val newsView: NewsContract.View)
     : NewsContract.Presenter, NewsDataSource.OnFinishedListener {
 
+    override fun dismissNews(position: Int) {
+        newsView.onSwipeToDismiss(position)
+    }
+
     override fun fetchNews(category: String, date: String, sortBy: String) {
         newsView.showProgressDialog(true)
         newsRepository.getNewsList(category, date, sortBy, this)

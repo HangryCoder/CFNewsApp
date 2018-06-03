@@ -14,6 +14,8 @@ interface NewsContract {
 
         fun showNewsDetails(news: News)
 
+        fun onSwipeToDismiss(position: Int)
+
     }
 
     interface Presenter {
@@ -21,6 +23,8 @@ interface NewsContract {
         fun fetchNews(category: String, date: String, sortBy: String)
 
         fun openNewsDetails(news: News)
+
+        fun dismissNews(position: Int)
 
     }
 }
